@@ -67,7 +67,7 @@
 <body>
 
 <div id="container">
-	<h1>Test of GIT.</h1>
+	<h1>Test of GIT number 2.</h1>
 
 	<div id="body">
 		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
