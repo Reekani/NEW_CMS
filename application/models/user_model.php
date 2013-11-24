@@ -48,17 +48,7 @@ class User_model extends CI_Model {
       'mail'  => $this->input->post('email_address'),
       'hash'    => md5(uniqid()),
     );
-  $this->db->insert('encrypted_temp',$newdata);
-  $to      = $newdata['mail'];
-  $subject = 'Link aktywacyjny';
-  $message = 'Witaj '.$login.' ! Aby potwierdzić ten adres email'
-        . ' kliknij w link: www.reekani.encrypted.pl/user/confirm/'.$login.
-          '/'.$newdata['hash'];
-  $headers = 'From: noreply@encrypted.pl' . "\r\n" .
-    'Reply-To: webmaster@example.com' . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
-
-  mail($to, $subject, $message, $headers);
+    $this->db->insert('encrypted_temp',$newdata);
    }
 
   }

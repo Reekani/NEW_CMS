@@ -124,6 +124,7 @@ class User extends CI_Controller{
  }
  public function send_activation($mail, $login)
  {
+
  $email_config = Array(
             'mailtype'  => 'html',
             'starttls'  => true,
@@ -131,19 +132,21 @@ class User extends CI_Controller{
         );
  $this->load->library('email', $email_config);
 
-$this->email->from('noreply@encrypted.com', 'Invoice');
+$this->email->from('noreply@encrypted.pl', 'Invoice');
 $this->email->to($mail); 
 
-$hash = $this->user_model->get_hash($mail, $login);
+$hash = $this->user_model->get_hash($mail);
 
 $this->email->subject('Mail aktywacyjny');
-$this->email->message('Aby potwierdzić swój adres email'
-        . 'kliknij link: {unwrap} www.reekani.encrypted.pl/confirm/'
+$this->email->message('Aby potwierdzić swój adres email '
+        . 'kliknij link: {unwrap} www.reekani.encrypted.pl/confirm/email/'
         .$login.'/'.$hash.'{/unwrap}');	
 
 $this->email->send();
 
-echo $this->email->print_debugger();
+
+
+
  }
 }
 ?>
