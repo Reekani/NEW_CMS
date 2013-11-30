@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://reekani.encrypted.pl/';
+$config['base_url']	= 'http://reekani.encrypted.pl';
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ $config['base_url']	= 'http://reekani.encrypted.pl/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = 'NEW_CMS/index.php';
 
 /*
 |--------------------------------------------------------------------------
