@@ -32,9 +32,17 @@ class User extends CI_Controller{
   $data['title']= 'Welcome';
   $this->load->view('header_view',$data);
   $this->load->view('welcome_view.php');
+  $this->load->view('startChat');
   $this->load->view('footer_view');
   }
  }
+ 
+ public	function chat($me, $you)
+    {
+        $data['me'] = $me;
+        $data['you'] = $you;
+        $this->load->view('chatty', $data);
+    }
  public function login()
  {
   $login=$this->input->post('login');
