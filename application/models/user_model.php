@@ -151,6 +151,55 @@ class User_model extends CI_Model {
             }
         }
     }
+    
+    public function get_friends($me) {
+            $this->db->where("from", $me);
+            $query = $this->db->get("encrypted_friends");
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $rows) {
+                    $newdata = array(
+                        'to' => $rows->to
+                    );
+                    
+                }
+                return $newdata;
+            }
+        
+    }
+    
+     public function get_priv_messages($user)
+ {
+         $this->db->where('to', $user);
+         $query = $this->db->get("encrypted_private");
+         if ($query->num_rows() > 0) {
+             foreach ($query->result() as $rows) {
+                 $data = array(
+                     'from' => $rows->from,
+                     'to' => $rows->to,
+                     'title' => $rows->title,
+                     'content' => $rows->content,
+                     'sent' => $rows->sent,
+                     'response' => $rows->response
+                 );
+             }
+             
+             return $data;
+         }
+ }
+ 
+ public function get_priv_count($user)
+ {
+     $counter = 0;
+     $this->db->where('to', $user);
+     $this->db->where('rcvd', 0);
+     $query = $this->db->get("encrypted_private");
+     if ($query->num_rows() > 0) {
+         foreach ($query->result() as $rows) {
+             $counter++;
+         }
+         return $counter;
+     }
+ }
 
 }
 

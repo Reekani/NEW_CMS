@@ -61,7 +61,7 @@
             <div class="head">
                 <h2>You are BOB</h2><br>
                 <small>Open links in two different browsers</small>
-            </div>
+<!--            </div>
             <div class="chat">
                 <a href="<?=base_url()?>index.php/user/chat/Bob/Robert">Chat(You with Robert)</a><br>
                 Link: <input type="text" name="" readonly="readonly" value="<?=base_url()?>index.php/user/chat/Bob/Robert"><br>
@@ -79,4 +79,4 @@
         </div>
     </div>
 </body>
-
+-->
