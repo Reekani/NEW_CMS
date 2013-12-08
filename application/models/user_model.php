@@ -157,11 +157,10 @@ class User_model extends CI_Model {
             $query = $this->db->get("encrypted_friends");
             if ($query->num_rows() > 0) {
                 foreach ($query->result() as $rows) {
-                    $newdata = array(
-                        'to' => $rows->to
-                    );
+                    $array[$rows->id] = $rows->to;
                     
                 }
+                $newdata = $array;
                 return $newdata;
             }
         
@@ -169,17 +168,18 @@ class User_model extends CI_Model {
     
      public function get_priv_messages($user)
  {
-         $this->db->where('to', $user);
-         $query = $this->db->get("encrypted_private");
+         $this->db->where('from', $user);
+//         $this->db->or_where('from', $user);
+//         $this->db->select('from, to');
+//         $this->db->distinct();
+         
+         $query = $this->db->get("chat");
          if ($query->num_rows() > 0) {
              foreach ($query->result() as $rows) {
                  $data = array(
                      'from' => $rows->from,
                      'to' => $rows->to,
-                     'title' => $rows->title,
-                     'content' => $rows->content,
-                     'sent' => $rows->sent,
-                     'response' => $rows->response
+                     'id' =>$rows->id
                  );
              }
              

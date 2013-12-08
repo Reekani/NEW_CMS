@@ -6,12 +6,4 @@
 </head>
 <body>
     
-    <h4><?php 
-    if (isset($priv_count)) {
-        $prywatne_info = 'Wiadomości ('.$priv_count.')';
-    }
-    else {
-        $prywatne_info = 'Wiadomości';
-    }
-    
-    echo anchor('user/private_messages', $prywatne_info); ?></h4>
+   

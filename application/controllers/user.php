@@ -33,8 +33,8 @@ class User extends CI_Controller{
   $data['me'] = $this->session->userdata('user_name');
   $data['friends'] = $this->user_model->get_friends($data['me']);
   $data['priv_count'] = $this->user_model->get_priv_count($data['me']);
-  $this->load->view('header_view',$data);
-  $this->load->view('welcome_view.php');
+  $this->load->view('header_view');
+  $this->load->view('welcome_view.php', $data);
   $this->load->view('chat',$data);
   $this->load->view('footer_view');
   }
@@ -290,7 +290,7 @@ $this->email->send();
   {
            $data['me'] = $this->session->userdata('user_name');
            $data['priv'] = $this->user_model->get_priv_messages($data['me']);
-           $this->load->view('priv_view');
+           $this->load->view('priv_view', $data);
        }
  }
  

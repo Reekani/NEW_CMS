@@ -1,8 +1,12 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+if (isset($priv)) {
+    foreach ($priv as $value) {
+        echo $value['from'].'<br>'.$value['to'];
+    }
+   echo var_dump($priv).'<br>';
+   echo $priv['from'];
+}
+
+?>
 
