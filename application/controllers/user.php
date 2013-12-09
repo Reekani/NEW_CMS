@@ -29,18 +29,22 @@ class User extends CI_Controller{
   }
   else
   {
-  $data['title']= 'Welcome';
-  $this->load->view('header_view',$data);
-  $this->load->view('welcome_view.php');
-  $this->load->view('startChat');
+  $data['title']= 'WelcomeX';
+  $data['me'] = $this->session->userdata('user_name');
+  $data['friends'] = $this->user_model->get_friends($data['me']);
+  $data['priv_count'] = $this->user_model->get_priv_count($data['me']);
+  $this->load->view('header_view');
+  $this->load->view('welcome_view.php', $data);
+  $this->load->view('chat',$data);
   $this->load->view('footer_view');
   }
  }
  
  public	function chat($me, $you)
     {
-        $data['me'] = $me;
+        $data['me'] = $this->session->userdata('user_name');
         $data['you'] = $you;
+        
         $this->load->view('chatty', $data);
     }
  public function login()
@@ -279,5 +283,17 @@ $this->email->send();
 
 
  }
+ 
+ public function private_messages()
+ {
+       if(($this->session->userdata('user_name')!=""))
+  {
+           $data['me'] = $this->session->userdata('user_name');
+           $data['priv'] = $this->user_model->get_priv_messages($data['me']);
+           $this->load->view('priv_view', $data);
+       }
+ }
+ 
+
 }
 ?>

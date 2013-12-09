@@ -27,10 +27,18 @@ body {
 
 </head>
 <body>
+   
+ 
 <div id="main_container">
+<?php if (isset($friends)) {
+     foreach ($friends as $value) {
+         
+         echo '<a href="javascript:void(0)" onclick="javascript:chatWith(\''.$value.'\')">Chat With '.$value.'</a>';
+         
+     }
+}
+?>
 
-<a href="javascript:void(0)" onclick="javascript:chatWith('<?=$you?>')">Chat With <?=$you?></a>
-<!-- YOUR BODY HERE -->
 
 </div>
 
