@@ -14,7 +14,13 @@
 | path to your installation.
 |
 */
+<<<<<<< HEAD
 $config['base_url']	= 'http://cms.encrypted.pl';
+=======
+
+$config['base_url']	= 'http://reekani.encrypted.pl/NEW_CMS/';
+
+>>>>>>> 734332bb3246df8e8eaab4a342c68af704911e57
 
 /*
 |--------------------------------------------------------------------------

@@ -8,7 +8,8 @@ class Welcome extends CI_Controller {
 	 * Maps to the following URL
 	 * 		http://example.com/index.php/welcome
 	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
+	 * 		http://exampl
+	{e.com/index.php/welcome/index
 	 *	- or -
 	 * Since this controller is set as the default controller in 
 	 * config/routes.php, it's displayed at http://example.com/
@@ -17,8 +18,8 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
-	{
+	public function index(){
+            
 		$this->load->view('welcome_message');
 	}
 }
