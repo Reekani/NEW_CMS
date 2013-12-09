@@ -29,17 +29,17 @@ html {
 
 body {
     margin: 0;
-    background: gray;
+    background: #4671D5;
     height: 100%;
     width: 100%;
 }
 
 	body,input,textarea,select
 	{
-		font-family: 'Gudea', sans-serif;
-		font-size: 19pt;
+		font-family: 'Ubuntu', sans-serif;
+		font-size: 15pt;
 		font-weight: 300;
-		line-height: 1.75em;
+		line-height: 1.5em;
 		color: #888;
 		-webkit-text-stroke: 0.15px;
 	}
@@ -52,10 +52,39 @@ body {
 #header {
     position: fixed;
     top: 0;
-    z-index: 9999;
-    height: 50px;
+    z-index: 200;
+    height: 45px;
+    padding-top: 15px;
     width: 100%;
-    background: #06266F;
+    background: #2a4480;
+}
+
+#header a.logo {
+    max-width: 20%;
+/*    padding-left: 15px; */
+}
+
+#header a {
+    color: #FFF;
+    text-decoration: none;
+    font-size: 2em;
+    text-decoration: none;
+    outline: 0;
+    border: 0;
+    -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: none;
+    -ms-transition: none;
+    transition: none;
+}
+
+#header a span:before
+{
+    position: absolute;
+    left: 15px;
+    color: #FFF;
+    text-align: left;
+    width: 2em;
 }
 
 /*********************************************************************************/
@@ -64,13 +93,14 @@ body {
 	
 	#nav
 	{
-            margin-top: 50px;
+            margin-top: 60px;
 	}
 	
 		#nav ul
 		{
                     list-style: none;
                     list-style-type: none;
+                    padding: 0;
 		}
 		
 			#nav ul li
@@ -80,7 +110,7 @@ body {
 				#nav ul li a
 				{
 					display: block;
-					padding: 0.5em 1.5em 0.5em 1.5em;
+					padding: 0.5em 0.5em 0.5em 0.5em;
 					color: #FFF;
 					text-decoration: none;
 					outline: 0;
@@ -108,11 +138,16 @@ body {
 							width: 2em;
 						}
 
-					#nav ul li a.active
+					#nav ul li a:hover
 					{
-						background: rgba(0,0,0,0.15);
-						box-shadow: inset 0 0 0.25em 0 rgba(0,0,0,0.125);
+						background: #6C8CD5;
 						color: #fff;
+					}
+
+                                        #nav ul li a.active
+					{
+						background: #FFF;
+						color: #2a4480;
 					}
 
 						#nav ul li a.active span
@@ -121,7 +156,7 @@ body {
 
 							#nav ul li a.active span:before
 							{
-								color: #FFF;
+								color: #2a4480;
 							}
 
 
@@ -140,24 +175,51 @@ body {
 #menu {
     height:100%;
     width: 20%;
-    position: relative;
+    position: fixed;
     top: 0;
     float: left;
     background: #4671D5;
+    z-index: 100;
 }
 
 /*********************************************************************************/
-/* Menu                                                                        */
+/* Container                                                                       */
 /*********************************************************************************/
 
-#container {
-    height:100%;
-    width: 80%;
+#page {
+    min-height:100%;
+    width: 100%;
     float:left;
     position: relative;
     top: 0;
     background: #FFFFFF;
 }
+
+#container {
+    margin-left: 20%;
+    margin-right: 15%;
+}
+
+/*********************************************************************************/
+/* Container                                                                       */
+/*********************************************************************************/
+
+#friends {
+    min-height:100%;
+    width: 15%;
+    float:right;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #EEE;
+    z-index: 100;
+}
+
+#friends-list {
+    margin-top: 60px;
+}
+
+
 
 /*********************************************************************************/
 /* Icons                                                                         */
@@ -168,6 +230,7 @@ body {
 	.icon
 	{
 		text-decoration: none;
+                padding-left: 2em;
 	}
 	
 		.icon span
