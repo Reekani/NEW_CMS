@@ -151,55 +151,73 @@ class User_model extends CI_Model {
             }
         }
     }
-    
+
     public function get_friends($me) {
-            $this->db->where("from", $me);
-            $query = $this->db->get("encrypted_friends");
-            if ($query->num_rows() > 0) {
-                foreach ($query->result() as $rows) {
-                    $array[$rows->id] = $rows->to;
-                    
-                }
-                $newdata = $array;
-                return $newdata;
+        $this->db->where("from", $me);
+        $query = $this->db->get("encrypted_friends");
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $rows) {
+                $array[$rows->id] = $rows->to;
             }
-        
+            $newdata = $array;
+            return $newdata;
+        }
     }
-    
-     public function get_priv_messages($user)
- {
-         $this->db->where('from', $user);
-//         $this->db->or_where('from', $user);
-//         $this->db->select('from, to');
-//         $this->db->distinct();
-         
-         $query = $this->db->get("chat");
-         if ($query->num_rows() > 0) {
-             foreach ($query->result() as $rows) {
-                 $data = array(
-                     'from' => $rows->from,
-                     'to' => $rows->to,
-                     'id' =>$rows->id
-                 );
-             }
-             
-             return $data;
-         }
- }
- 
- public function get_priv_count($user)
- {
-     $counter = 0;
-     $this->db->where('to', $user);
-     $this->db->where('rcvd', 0);
-     $query = $this->db->get("encrypted_private");
-     if ($query->num_rows() > 0) {
-         foreach ($query->result() as $rows) {
-             $counter++;
-         }
-         return $counter;
-     }
- }
+
+    public function get_priv_messages($user) {
+        $this->db->distinct();
+        $this->db->where('from', $user);
+        $this->db->or_where('to', $user);
+        $this->db->select('id, from, to');
+        $query = $this->db->get("chat");
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $rows) {
+                $array[$rows->id] = $rows->to;
+                $array[$rows->id + 1] = $rows->from;
+            }
+
+
+            $iterator = 0;
+            if (count($array) > 0) {
+                $data = array();
+                foreach ($array as $value) {
+                    if ($value != $user) {
+                        $counter = 0;
+                        if (count($data) > 0) {
+                            foreach ($data as $value2) {
+                                if ($value == $value2) {
+                                    $counter++;
+                                }
+                            }
+                            if ($counter == 0) {
+                                $data[$iterator] = $value;
+                                $iterator++;
+                            }
+                        } else {
+                            $data[0] = $value;
+                        }
+                    }
+                }
+            }
+        } else {
+            $data = "null";
+        }
+        return $data;
+    }
+
+    public function get_priv_count($user) {
+        $counter = 0;
+        $this->db->where('to', $user);
+        $this->db->where('rcvd', 0);
+        $query = $this->db->get("encrypted_private");
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $rows) {
+                $counter++;
+            }
+            return $counter;
+        }
+    }
 
 }
 

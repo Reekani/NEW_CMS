@@ -33,7 +33,7 @@ body {
 <?php if (isset($friends)) {
      foreach ($friends as $value) {
          
-         echo '<a href="javascript:void(0)" onclick="javascript:chatWith(\''.$value.'\')">Chat With '.$value.'</a>';
+         echo '<a href="javascript:void(0)" onclick="javascript:chatWith(\''.$value.'\')">Chat With '.$value.'</a><br>';
          
      }
 }
