@@ -1,113 +1,102 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class User extends CI_Controller{
- public function __construct()
- {
-  parent::__construct();
-  $this->load->model('user_model');
- }
- public function index()
- {
-  if(($this->session->userdata('user_name')!=""))
-  {
-   $this->welcome();
-  }
-  else{
-   $data['title']= 'Home';
-   $this->load->view('header_view',$data);
-   $this->load->view("registration_view.php");
-   $this->load->view('footer_view');
-  }
- }
- public function welcome()
- {
-  if(($this->session->userdata('user_name')==""))
-  {
-   $data['title']= 'Home';
-   $this->load->view('header_view',$data);
-   $this->load->view("registration_view.php");
-   $this->load->view('footer_view');
-  }
-  else
-  {
-  $data['title']= 'WelcomeX';
-  $data['me'] = $this->session->userdata('user_name');
-  $data['friends'] = $this->user_model->get_friends($data['me']);
-  $data['priv_count'] = $this->user_model->get_priv_count($data['me']);
-  $this->load->view('header_view');
-  $this->load->view('welcome_view.php', $data);
-  $this->load->view('chat',$data);
-  $this->load->view('footer_view');
-  }
+ 
+    public function __construct()
+    {
+        parent::__construct();
+        
+        
+        
+        $this->load->model('user_model');
+        $this->load->model('design_model');
+        $this->load->helper('url');
+    }
+ 
+    public function index()
+    {
+        if($this->session->userdata('user_name'))
+        {
+            $data = array();
+            $data['me'] = $this->session->userdata('user_name');
+            $data['friends'] = $this->user_model->get_friends($data['me']);
+            $this->welcome();
+        }
+        else 
+        {
+            $this->load->view('default');
+//            redirect('error/no_access');
+        }
+    }
+    
+    public function welcome()
+    {
+        if($this->session->userdata('user_name'))
+        {
+            $data = array();
+            $data['me'] = $this->session->userdata('user_name');
+            $data['friends'] = $this->user_model->get_friends($data['me']);
+              $data['title']= 'WelcomeX';
+            $data['priv_count'] = $this->user_model->get_priv_count($data['me']);
+            $data['message'] = $this->design_model->success('Zalogowano poprawnie.');
+            $this->load->view('default',$data);   
+            //$this->load->view('chat',$data);
+        } 
+        else 
+        {
+            redirect('error/no_access');
+        }
  }
  
- public	function chat($me, $you)
-    {
-        $data['me'] = $this->session->userdata('user_name');
-        $data['you'] = $you;
-        
-        $this->load->view('chatty', $data);
-    }
+// public	function chat($me, $you)
+//    {
+//        $data['me'] = $this->session->userdata('user_name');
+//        $data['you'] = $you;
+//        
+//        $this->load->view('chatty', $data);
+//    }
  public function login()
  {
   $login=$this->input->post('login');
   $password=md5($this->input->post('pass'));
 
   $result=$this->user_model->login($login,$password);
-  if($result) $this->welcome();
-  else        $this->wrong_login_data();
+  if($result) {
+      $_SESSION['username'] = $this->session->userdata('user_name');
+      $this->welcome();
+  }
+  else $this->wrong_login_data();
  }
  
   public function wrong_login_data()
  {
-  $data['wrong_login']= 'Error';
-  $data['title']= 'Login zajęty';
-  $this->load->view('header_view',$data);
-  $this->load->view('registration_view.php',$data);
-  $this->load->view('footer_view');
+      $data['message'] = $this->design_model->error('Niepoprawne dane logowania.');
+      $this->load->view('default',$data);  
  }
-  public function edit_profile()
+  public function edit()
  {
     if(($this->session->userdata('user_name')!=""))
   {
-        $this->load->view('header_view');
-        $this->load->view('edit_view');
-        $this->load->view('footer_view');
+        $data = array();
+            $data['me'] = $this->session->userdata('user_name');
+            $data['friends'] = $this->user_model->get_friends($data['me']);
+        $this->load->view('user/edit_view',$data);
   }
   else{
-   $data['title']= 'Home';
-   $this->load->view('header_view',$data);
-   $this->load->view("registration_view.php");
-   $this->load->view('footer_view');
+   redirect('error/no_access');
   }
- }
- public function change_login()
- {
-     $old_login = $this->session->userdata('user_name');
-     $new_login = $this->input->post('user_name');
-     $result = $this->user_model->change_user_login($old_login, $new_login);
-     if ($result)
-     {
-         $data['login_change_succ'] = 'brawo';
-     }
-     else 
-     {
-         $data['login_change_err'] = 'tryAgain';
-     }
-     
-     $this->load->view('header_view');
-     $this->load->view('edit_view.php',$data);
-     $this->load->view('footer_view');
  }
  
  public function change_mail()
  {
+     $data = array();
+            $data['me'] = $this->session->userdata('user_name');
+            $data['friends'] = $this->user_model->get_friends($data['me']);
      $this->load->library('form_validation');
      $this->form_validation->set_rules('email_address', 'Your Email', 'trim|required|valid_email');
      if($this->form_validation->run() == FALSE)
      {
-         $this->load->view('header_view');
-         $this->load->view('edit_view');
-         $this->load->view('footer_view');
+         $this->edit();
      }
      else
      {
@@ -115,43 +104,40 @@ class User extends CI_Controller{
      $new_mail = $this->input->post('email_address');
      if($old_mail == $new_mail)
      {
-        $data['same_mail'] = 'ten_sam_email';
-        $this->load->view('header_view');
-        $this->load->view('edit_view.php',$data);
-        $this->load->view('footer_view');
+        $data['message'] = 'ten_sam_email';
+        $this->load->view('user/edit_view',$data);
      }
      else
      {
-     $result = $this->user_model->change_user_mail($old_mail, $new_mail);
-     if ($result)
-     {
-         $data['mail_change_succ'] = 'brawo';
-         $login = $this->session->userdata('user_name');
-         $this->send_activation($new_mail, $login);
-     }
-     else 
-     {
-         $data['mail_change_err'] = 'tryAgain';
+        $result = $this->user_model->change_user_mail($old_mail, $new_mail);
+        if ($result)
+        {
+            $data['message'] = 'brawo';
+            $login = $this->session->userdata('user_name');
+            $this->send_activation($new_mail, $login);
+        }
+        else 
+        {
+            $data['message'] = 'tryAgain';
 
-     }
-     
-     $this->load->view('header_view');
-     $this->load->view('edit_view.php',$data);
-     $this->load->view('footer_view');
+        }
+
+        $this->load->view('user/edit_view',$data);
      }
      }
  }
  
  public function change_password()
  {
+     $data = array();
+            $data['me'] = $this->session->userdata('user_name');
+            $data['friends'] = $this->user_model->get_friends($data['me']);
      $this->load->library('form_validation');
-     $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[4]|max_length[32]');
+     $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]|max_length[32]');
      $this->form_validation->set_rules('con_password', 'Password Confirmation', 'trim|required|matches[password]');
      if($this->form_validation->run() == FALSE)
      {
-        $this->load->view('header_view');
-        $this->load->view('edit_view.php');
-        $this->load->view('footer_view');
+        $this->load->view('user/edit_view',$data);
      }
      else
      {
@@ -161,17 +147,15 @@ class User extends CI_Controller{
          $result = $this->user_model->change_user_password($id, $old_password, $new_password);
          if($result)
          {
-             $data['change_password_succ'] = 'brawo';
+             $data['message'] = 'brawo';
 
          }
          else 
          {
-             $data['change_password_err'] = 'tryAgain';
+             $data['message'] = 'Niepoprawne haseło';
          }
          
-         $this->load->view('header_view');
-            $this->load->view('edit_view.php', $data);
-             $this->load->view('footer_view');
+        $this->load->view('user/edit_view',$data);
          
          
      }
@@ -179,83 +163,75 @@ class User extends CI_Controller{
  }
  public function thank()
  {
-  $data['title']= 'Thank';
-  $this->load->view('header_view',$data);
-  $this->load->view('thank_view.php');
-  $this->load->view('footer_view');
+   $data['title']= 'Rejestracja';
+ $data['message'] = $this->design_model->success('Zostałeś poprawnie zarejestrowany. Prosimy o aktywację konta za pomocą linku aktywacyjnego wysłanego na adres mail.');
+$this->load->view('default.php',$data);
   
  }
- public function registration()
- {
-  $this->load->library('form_validation');
-  $this->form_validation->set_rules('user_name', 'User Name', 'trim|required|min_length[4]|xss_clean');
-  $this->form_validation->set_rules('email_address', 'Your Email', 'trim|required|valid_email');
-  $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[4]|max_length[32]');
-  $this->form_validation->set_rules('con_password', 'Password Confirmation', 'trim|required|matches[password]');
-  $login=$this->input->post('user_name');
-  $mail=$this->input->post('email_address');
+    public function registration()
+    {
+        if($this->session->userdata('user_name'))
+        {
+            $data['message'] = $this->design_model->error('Nie możesz się zarejestrować, gdy jesteś już zalogowany.');
+            $this->load->view('default',$data); 
+        }
+        else 
+        {
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('user_name', 'User Name', 'trim|required|min_length[4]|xss_clean');
+            $this->form_validation->set_rules('email_address', 'Your Email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]|max_length[32]');
+            $this->form_validation->set_rules('con_password', 'Password Confirmation', 'trim|required|matches[password]');
+            $login=$this->input->post('user_name');
+            $mail=$this->input->post('email_address');
 
-  if($this->form_validation->run() == FALSE)
-  {
-   $this->index();
-  }
-  elseif($this->user_model->check_login($login))
-  {
-       $this->login_taken();
-  }
-  elseif($this->user_model->check_mail($mail))
-  {
-       $this->mail_error();
-  }
-  else
-  {
-
-   $this->user_model->add_user();
-   $this->user_model->add_unc_mail();
-   $this->send_activation($mail, $login);
-   $this->thank();  
-   
-  }
+            if($this->form_validation->run() == FALSE)
+            {
+                $data['title']= 'Rejestracja';
+                $this->load->view('user/register_view.php',$data);
+            }
+            elseif($this->user_model->check_login($login))
+            {
+                 $this->login_taken();
+            }
+            elseif($this->user_model->check_mail($mail))
+            {
+                 $this->mail_error();
+            }
+            else
+            {
+                $this->user_model->add_user();
+                $this->user_model->add_unc_mail();
+                $this->send_activation($mail, $login);
+                $this->thank(); 
+            }
+        }
  }
+ 
+ 
  public function logout()
  {
-  if(($this->session->userdata('user_name')==""))
+  if($this->session->userdata('user_name'))
   {
-   $data['title']= 'Home';
-   $this->load->view('header_view',$data);
-   $this->load->view("registration_view.php");
-   $this->load->view('footer_view');
+      session_start();
+    $this->session->sess_destroy();
+    session_destroy();
   }
-  else
-  {
-  $newdata = array(
-  'user_id'   =>'',
-  'user_name'  =>'',
-  'user_email'     => '',
-  'logged_in' => FALSE,
-  );
-  $this->session->unset_userdata($newdata );
-  $this->session->sess_destroy();
-  $this->index();
-  }
+  $this->load->view('default');
  }
  
 
  public function login_taken()
  {
-  $data['login_error']= 'Error';
-  $data['title']= 'Login zajęty';
-  $this->load->view('header_view',$data);
-  $this->load->view('registration_view.php',$data);
-  $this->load->view('footer_view');
+ $data['title']= 'Rejestracja';
+ $data['message'] = $this->design_model->error('Niestety ten login jest już zajęty.');
+$this->load->view('user/register.php',$data);
  }
   public function mail_error()
  {
-  $data['mail_error']= 'Error';
-  $data['title']= 'Mail zajęty';
-  $this->load->view('header_view',$data);
-  $this->load->view('registration_view.php',$data);
-  $this->load->view('footer_view');
+ $data['title']= 'Rejestracja';
+ $data['message'] = $this->design_model->error('Niestety ten adres mail został już użyty.');
+$this->load->view('user/register.php',$data);
  }
  public function send_activation($mail, $login)
  {

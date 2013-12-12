@@ -6,7 +6,7 @@ var maxChatHeartbeat = 33000;
 var chatHeartbeatTime = minChatHeartbeat;
 var originalTitle;
 var blinkOrder = 0;
-var baseUrl = "/NEW_CMS/chat/"; 
+var baseUrl = "/chat/"; 
 var chatboxFocus = new Array();
 var newMessages = new Array();
 var newMessagesWin = new Array();

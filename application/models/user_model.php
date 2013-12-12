@@ -85,24 +85,27 @@ class User_model extends CI_Model {
     }
 
     public function change_user_login($old_login, $new_login) {
-        $this->db->where("login", $new_login);
-        $query = $this->db->get("encrypted_users");
-        if ($query->num_rows() > 0) {
-            return false;
-        } else {
-            $data = array(
-                'login' => $new_login
-            );
+        if(strlen($new_login)>4)
+        {
+            $this->db->where("login", $new_login);
+            $query = $this->db->get("encrypted_users");
+            if ($query->num_rows() > 0) {
+                return false;
+            } else {
+                $data = array(
+                    'login' => $new_login
+                );
 
-            $this->db->where('login', $old_login);
-            $this->db->update('encrypted_users', $data);
-            $newdata = array(
-                'user_name' => $new_login
-            );
+                $this->db->where('login', $old_login);
+                $this->db->update('encrypted_users', $data);
+                $newdata = array(
+                    'user_name' => $new_login
+                );
 
-            $this->session->set_userdata($newdata);
-            return true;
-        }
+                $this->session->set_userdata($newdata);
+                return true;
+            }
+        } else return false;
     }
 
     public function change_user_mail($old_mail, $new_mail) {
@@ -153,17 +156,15 @@ class User_model extends CI_Model {
     }
     
     public function get_friends($me) {
-            $this->db->where("from", $me);
-            $query = $this->db->get("encrypted_friends");
-            if ($query->num_rows() > 0) {
-                foreach ($query->result() as $rows) {
-                    $array[$rows->id] = $rows->to;
-                    
-                }
-                $newdata = $array;
-                return $newdata;
+        $this->db->where("from", $me);
+        $query = $this->db->get("encrypted_friends");
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $rows) {
+                $array[$rows->id] = $rows->to;
             }
-        
+            $newdata = $array;
+            return $newdata;
+        }
     }
     
      public function get_priv_messages($user)

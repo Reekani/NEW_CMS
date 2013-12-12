@@ -14,14 +14,7 @@
 | path to your installation.
 |
 */
-<<<<<<< HEAD
 $config['base_url']	= 'http://cms.encrypted.pl';
-=======
-
-$config['base_url']	= 'http://reekani.encrypted.pl/NEW_CMS/';
-
->>>>>>> 734332bb3246df8e8eaab4a342c68af704911e57
-
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -32,7 +25,7 @@ $config['base_url']	= 'http://reekani.encrypted.pl/NEW_CMS/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'NEW_CMS/index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -230,7 +223,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '35512';
+$config['encryption_key'] = 'KFgzVa1LcOf12IWdoN6EVh9230O543wM';
 
 /*
 |--------------------------------------------------------------------------

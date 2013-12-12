@@ -20,13 +20,7 @@ body {
 }
 </style>
 
-<link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>chat/css/chat.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>chat/css/screen.css" />
-<script type="text/javascript" src="<?=base_url()?>chat/js/jquery.js"></script>
-<script type="text/javascript" src="<?=base_url()?>chat/js/chat.js"></script>
-<!--[if lte IE 7]>
-<link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>chat/css/screen_ie.css" />
-<![endif]-->
+
 
 </head>
 <body>

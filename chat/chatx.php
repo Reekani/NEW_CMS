@@ -13,11 +13,11 @@ $_SESSION['username'] = $me; // Must be already set
 <title>Sample Chat Application</title>
 <style>
 body {
-	background-color: #eeeeee;
-	padding:0;
-	margin:0 auto;
-	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
-	font-size:11px;
+        background-color: #eeeeee;
+        padding:0;
+        margin:0 auto;
+        font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+        font-size:11px;
 }
 </style>
 
