@@ -205,7 +205,7 @@ body {
                                         #nav ul li a.active
 					{
 						background: #FFF;
-						color: #2a4480;
+						color: #125e8b;
 					}
 
 						#nav ul li a.active span
@@ -214,7 +214,7 @@ body {
 
 							#nav ul li a.active span:before
 							{
-								color: #2a4480;
+								color: #125e8b;
 							}
 
 
@@ -322,6 +322,13 @@ background-color: #e52129;
     margin-top: 60px;
 }
 
+#friends-search {
+    width:100%;
+    padding-bottom: 4%;
+    background: #dadada;
+    border-bottom: 1px solid #FFF;
+}
+
 #register-link {
     padding-top: 10px;
     margin-left: 10%;
@@ -341,7 +348,11 @@ a.friend:hover {
     background: #dadada;
 }
 
-
+.chat span {
+    text-align: right;
+    float: right;
+    margin-right: 10%;
+}
 
 /*********************************************************************************/
 /* Icons                                                                         */

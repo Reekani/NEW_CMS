@@ -7,6 +7,21 @@ class User_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
+        
+        $this->load->database();
+        $this->update();
+    }
+    
+    function update() {
+        if($this->session->userdata('user_name'))
+        {
+            $login = $this->session->userdata('user_name');
+            $this->db->where("login", $login);
+            $data = array(
+                    'action' => time()
+                );
+            $this->db->update('encrypted_users', $data);
+        }
     }
 
     function login($login, $password) {
@@ -155,12 +170,24 @@ class User_model extends CI_Model {
         }
     }
     
+    public function get_action($login) {
+        $this->db->where("login", $login);
+        $query = $this->db->get("encrypted_users");
+        if ($query->num_rows() > 0) {
+             foreach ($query->result() as $row) {
+                 return $row->action;
+             } 
+        } 
+        return 0;
+    }
+    
     public function get_friends($me) {
         $this->db->where("from", $me);
         $query = $this->db->get("encrypted_friends");
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $rows) {
-                $array[$rows->id] = $rows->to;
+                $array[$rows->id][0] = $rows->to;
+                $array[$rows->id][1] = $this->get_action($rows->to);
             }
             $newdata = $array;
             return $newdata;

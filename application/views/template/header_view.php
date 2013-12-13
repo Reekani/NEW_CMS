@@ -17,7 +17,11 @@ and open the template in the editor.
         <link href='http://fonts.googleapis.com/css?family=Ubuntu&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         
         <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/chat.css" />
-        <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/screen.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/screen.css" />  
+        <link type="text/css" rel="stylesheet" href="http://encrypted.pl/auto/auto/autocomplete.css"  />
+        <script type="text/javascript" src="http://encrypted.pl/auto/auto/jquery-1.3.2.js"></script>
+        <script type="text/javascript" src="http://encrypted.pl/auto/auto/autocomplete.js"></script> 
+        
         <?php if($this->session->userdata('user_name'))
                     {?>
         <script type="text/javascript" src="<?=base_url()?>chat/js/jquery.js"></script>

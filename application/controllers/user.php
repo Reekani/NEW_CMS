@@ -13,6 +13,11 @@ class User extends CI_Controller{
         $this->load->helper('url');
     }
  
+    public function test()
+    {
+        $this->load->view('test');
+    }
+    
     public function index()
     {
         if($this->session->userdata('user_name'))
@@ -27,6 +32,16 @@ class User extends CI_Controller{
             $this->load->view('default');
 //            redirect('error/no_access');
         }
+    }
+    
+    public function search($part = '')
+    {
+        $this->load->model('auto_model');
+        $users = $this->auto_model->search('encrypted_users', 'login', $part);
+        foreach ($users as $user) {
+            echo "$user|$user\n";
+        }
+        
     }
     
     public function welcome()
