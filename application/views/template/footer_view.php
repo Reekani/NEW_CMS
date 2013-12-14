@@ -5,35 +5,8 @@
                 <div id="friends-list">
                 <?php if($this->session->userdata('user_name'))
                         { ?>
-                
-                    <body>
-
-<form onsubmit="return false;" action="">
-<input type="text" style="width: 300px;" value="" id="auto" class="ac_input"/>
-
-</form>
-
-<script type="text/javascript">
-
-$("#auto").autocomplete(
-"<?php base_url(); ?>user/search/",
-{
-delay:10,
-minChars:1,
-matchSubset:1,
-matchContains:1,
-cacheLength:10,
-autoFill:false,
-matchCase: false,
-selectFirst: false,
-max:10,
-scrollHeight: 180,
-mustMatch: false
-
-}
-);
-
-</script>
+      
+                    
                     <?php
                     if (isset($friends)) {
                             foreach ($friends as $friend) {

@@ -18,14 +18,38 @@ and open the template in the editor.
         
         <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/chat.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/screen.css" />  
-        <link type="text/css" rel="stylesheet" href="http://encrypted.pl/auto/auto/autocomplete.css"  />
-        <script type="text/javascript" src="http://encrypted.pl/auto/auto/jquery-1.3.2.js"></script>
-        <script type="text/javascript" src="http://encrypted.pl/auto/auto/autocomplete.js"></script> 
+        
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+
+        <script type="text/javascript" src="<?=base_url()?>chat/js/jquery.chat.js"></script>
+        <script type="text/javascript" src="<?=base_url()?>chat/js/chat.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$(function() {
+		$( "#autocomplete" ).autocomplete({
+			source: function(request, response) {
+				$.ajax({ url: "<?php echo site_url('autocomplete/suggestions'); ?>",
+				data: { term: $("#autocomplete").val()},
+				dataType: "json",
+				type: "POST",
+				success: function(data){
+					response(data);
+				}
+			});
+		},
+		minLength: 2
+		});
+	});
+});
+</script>
+        
         
         <?php if($this->session->userdata('user_name'))
                     {?>
-        <script type="text/javascript" src="<?=base_url()?>chat/js/jquery.js"></script>
-        <script type="text/javascript" src="<?=base_url()?>chat/js/chat.js"></script>
         
             
         

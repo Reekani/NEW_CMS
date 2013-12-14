@@ -36,11 +36,18 @@ class User extends CI_Controller{
     
     public function search($part = '')
     {
+        $result = array();
+        
         $this->load->model('auto_model');
         $users = $this->auto_model->search('encrypted_users', 'login', $part);
         foreach ($users as $user) {
-            echo "$user|$user\n";
+            $result[] = $user;
         }
+        
+        // Finally the JSON, including the correct content-type
+header('Content-type: application/json');
+ 
+echo json_encode($result); // see NOTE!
         
     }
     
