@@ -37,7 +37,7 @@
                         <input type="submit" value="Zaloguj" class="login">
                     </form>
                     <div id="register-link">
-                        <a href="<?php echo base_url(); ?>user/registration">Rejestracja uĹĽytkownika</a>
+                        <a href="<?php echo base_url(); ?>user/registration">Rejestracja użytkownika</a>
                     </div>
                    <?php } ?>
                 </div>
