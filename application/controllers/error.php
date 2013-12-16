@@ -12,6 +12,12 @@ class Error extends CI_Controller {
     }
 
     public function no_access() {
+        $data = $this->global_model->data();
+        $data['message'] = $this->design_model->warning('Nie masz uprawnień do przeglądania tej strony');
+        $this->load->view('default', $data);
+    }
+    
+    public function all() {
         $code['message'] = $this->design_model->error('text') .
                 $this->design_model->info('text') .
                 $this->design_model->success('text') .

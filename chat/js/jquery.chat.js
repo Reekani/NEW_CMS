@@ -1,4 +1,14 @@
-
+/*
+ * jQuery JavaScript Library v1.3.2
+ * http://jquery.com/
+ *
+ * Copyright (c) 2009 John Resig
+ * Dual licensed under the MIT and GPL licenses.
+ * http://docs.jquery.com/License
+ *
+ * Date: 2009-02-19 17:34:21 -0500 (Thu, 19 Feb 2009)
+ * Revision: 6246
+ */
 (function() {
     var l = this, g, y = l.jQuery, p = l.$, o = l.jQuery = l.$ = function(E, F) {
         return new o.fn.init(E, F)
@@ -856,7 +866,12 @@
                 o.dequeue(this, E)
             })
         }});
-
+    /*
+     * Sizzle CSS Selector Engine - v0.9.3
+     *  Copyright 2009, The Dojo Foundation
+     *  Released under the MIT, BSD, and GPL Licenses.
+     *  More information: http://sizzlejs.com/
+     */
     (function() {
         var R = /((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^[\]]*\]|['"][^'"]*['"]|[^[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?/g, L = 0, H = Object.prototype.toString;
         var F = function(Y, U, ab, ac) {
@@ -1290,7 +1305,7 @@
                             } else {
                                 return(aa % V == 0 && aa / V >= 0)
                             }
-                        }
+                    }
                 }, ID: function(U, T) {
                     return U.nodeType === 1 && U.getAttribute("id") === T
                 }, TAG: function(U, T) {

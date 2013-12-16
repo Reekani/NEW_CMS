@@ -54,6 +54,19 @@ a:hover {
     text-decoration: underline;
 }
 
+a.button {
+    display: inline-block;
+    padding: 10px;
+    background: #1570a6;
+    color: #FFF;
+    width: auto;
+}
+
+a.button:hover {
+    text-decoration: none;
+    background: #125e8b;
+}
+
 h1 {
     font-size: 2em;
     font-weight: 300;
@@ -75,6 +88,11 @@ label {
 }
 
 input {
+    width:auto;
+    padding:10px;
+}
+
+select {
     width:auto;
     padding:10px;
 }
@@ -101,6 +119,46 @@ input[type="submit"]:hover
     background: #125e8b;
 }
 
+/*********************************************************************************/
+/* Table                                                                        */
+/*********************************************************************************/
+
+table {
+    width:100%;
+    border-collapse: collapse;
+}
+
+table a:hover {
+    text-decoration: none;
+}
+
+tr {
+    border: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #f0f0f0;
+}
+
+thead {
+    background: #eaeaea;
+}
+
+thead:hover {
+    background: #eaeaea;
+}
+
+th {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+}
+
+td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+}
 
 /*********************************************************************************/
 /* Header                                                                         */
@@ -127,54 +185,54 @@ input[type="submit"]:hover
 }
 
 #header-login ul {
-  width:100%;
-  padding:0;
-  text-align: left;
-  display: inline;
-  list-style: none;
+    width:100%;
+    padding:0;
+    text-align: left;
+    display: inline;
+    list-style: none;
 }
 #header-login ul li {
-  width:100%;
-  position: relative;
-  cursor: pointer;
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  -ms-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  transition: all 0.2s;
+    width:100%;
+    position: relative;
+    cursor: pointer;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
 }
 #header-login ul li:hover {
 }
 #header-login ul li ul {
-  top:30px;
-  left:5px;
-  padding: 0;
-  position: absolute;
-  width: 150px;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  display: none;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transiton: opacity 0.2s;
-  -moz-transition: opacity 0.2s;
-  -ms-transition: opacity 0.2s;
-  -o-transition: opacity 0.2s;
-  -transition: opacity 0.2s;
+    top:30px;
+    left:5px;
+    padding: 0;
+    position: absolute;
+    width: 150px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transiton: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    -transition: opacity 0.2s;
 }
 #header-login ul li ul li { 
-  background: #125e8b;
-  display: block; 
-  color: #fff;
-  font-size: 0.6em;
-  padding: 5px;
+    background: #125e8b;
+    display: block; 
+    color: #fff;
+    font-size: 0.6em;
+    padding: 5px;
 }
 #header-login ul li ul li:hover { display: block; background: #1570a6; }
 #header-login ul li:hover ul {
-  display: block;
-  opacity: 1;
-  visibility: visible;
+    display: block;
+    opacity: 1;
+    visibility: visible;
 }
 
 #header a.logo {

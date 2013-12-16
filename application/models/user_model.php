@@ -3,23 +3,22 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class User_model extends CI_Model {
+class User_Model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
-        
+
         $this->load->database();
         $this->update();
     }
-    
+
     function update() {
-        if($this->session->userdata('user_name'))
-        {
+        if ($this->session->userdata('user_name')) {
             $login = $this->session->userdata('user_name');
             $this->db->where("login", $login);
             $data = array(
-                    'action' => time()
-                );
+                'action' => time()
+            );
             $this->db->update('encrypted_users', $data);
         }
     }
@@ -35,6 +34,7 @@ class User_model extends CI_Model {
                     'user_id' => $rows->id,
                     'user_name' => $rows->login,
                     'user_email' => $rows->mail,
+                    'admin' => $rows->admin,
                     'logged_in' => TRUE,
                 );
             }
@@ -100,8 +100,7 @@ class User_model extends CI_Model {
     }
 
     public function change_user_login($old_login, $new_login) {
-        if(strlen($new_login)>4)
-        {
+        if (strlen($new_login) > 4) {
             $this->db->where("login", $new_login);
             $query = $this->db->get("encrypted_users");
             if ($query->num_rows() > 0) {
@@ -120,7 +119,9 @@ class User_model extends CI_Model {
                 $this->session->set_userdata($newdata);
                 return true;
             }
-        } else return false;
+        }
+        else
+            return false;
     }
 
     public function change_user_mail($old_mail, $new_mail) {
@@ -169,18 +170,18 @@ class User_model extends CI_Model {
             }
         }
     }
-    
+
     public function get_action($login) {
         $this->db->where("login", $login);
         $query = $this->db->get("encrypted_users");
         if ($query->num_rows() > 0) {
-             foreach ($query->result() as $row) {
-                 return $row->action;
-             } 
-        } 
+            foreach ($query->result() as $row) {
+                return $row->action;
+            }
+        }
         return 0;
     }
-    
+
     public function get_friends($me) {
         $this->db->where("from", $me);
         $query = $this->db->get("encrypted_friends");
@@ -193,41 +194,39 @@ class User_model extends CI_Model {
             return $newdata;
         }
     }
-    
-     public function get_priv_messages($user)
- {
-         $this->db->where('from', $user);
+
+    public function get_priv_messages($user) {
+        $this->db->where('from', $user);
 //         $this->db->or_where('from', $user);
 //         $this->db->select('from, to');
 //         $this->db->distinct();
-         
-         $query = $this->db->get("chat");
-         if ($query->num_rows() > 0) {
-             foreach ($query->result() as $rows) {
-                 $data = array(
-                     'from' => $rows->from,
-                     'to' => $rows->to,
-                     'id' =>$rows->id
-                 );
-             }
-             
-             return $data;
-         }
- }
- 
- public function get_priv_count($user)
- {
-     $counter = 0;
-     $this->db->where('to', $user);
-     $this->db->where('rcvd', 0);
-     $query = $this->db->get("encrypted_private");
-     if ($query->num_rows() > 0) {
-         foreach ($query->result() as $rows) {
-             $counter++;
-         }
-         return $counter;
-     }
- }
+
+        $query = $this->db->get("chat");
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $rows) {
+                $data = array(
+                    'from' => $rows->from,
+                    'to' => $rows->to,
+                    'id' => $rows->id
+                );
+            }
+
+            return $data;
+        }
+    }
+
+    public function get_priv_count($user) {
+        $counter = 0;
+        $this->db->where('to', $user);
+        $this->db->where('rcvd', 0);
+        $query = $this->db->get("encrypted_private");
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $rows) {
+                $counter++;
+            }
+            return $counter;
+        }
+    }
 
 }
 
