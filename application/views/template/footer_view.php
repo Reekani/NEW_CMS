@@ -5,7 +5,11 @@
                 <div id="friends-list">
                 <?php if($this->session->userdata('user_name'))
                         { ?>
-      
+                    <div id="friends-search">
+                        <form method="POST" id="search-user" action="<?php echo base_url(); ?>autocomplete/user_result">
+                        <input type="text" id="autocomplete-user" name="user" class="login" placeholder="Wyszukaj użytkownika" />
+                        </form>
+                    </div>
                     
                     <?php
                     if (isset($friends)) {
@@ -33,7 +37,7 @@
                         <input type="submit" value="Zaloguj" class="login">
                     </form>
                     <div id="register-link">
-                        <a href="<?php echo base_url(); ?>user/registration">Rejestracja użytkownika</a>
+                        <a href="<?php echo base_url(); ?>user/registration">Rejestracja uĹĽytkownika</a>
                     </div>
                    <?php } ?>
                 </div>

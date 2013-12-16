@@ -18,35 +18,40 @@ and open the template in the editor.
         
         <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/chat.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/screen.css" />  
-        
-        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
+       
+        <link type="text/css" rel="stylesheet" media="all" href="<?=base_url()?>css/autocomplete.css" />  
+       
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
         <script type="text/javascript" src="<?=base_url()?>chat/js/jquery.chat.js"></script>
         <script type="text/javascript" src="<?=base_url()?>chat/js/chat.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$(function() {
-		$( "#autocomplete" ).autocomplete({
-			source: function(request, response) {
-				$.ajax({ url: "<?php echo site_url('autocomplete/suggestions'); ?>",
-				data: { term: $("#autocomplete").val()},
-				dataType: "json",
-				type: "POST",
-				success: function(data){
-					response(data);
-				}
-			});
-		},
-		minLength: 2
-		});
-	});
-});
-</script>
-        
+        <script type="text/javascript">
+        $(document).ready(function() {
+                $(function() {
+                        $( "#autocomplete-user" ).autocomplete({
+                                source: function(request, response) {
+                                        $.ajax({ url: "<?php echo site_url('autocomplete/users'); ?>",
+                                        data: { term: $("#autocomplete-user").val()},
+                                        dataType: "json",
+                                        type: "POST",
+                                        success: function(data){
+                                                response(data);
+                                        }
+                                });
+                        },
+                        minLength: 2,
+                        select: function(event, ui) {
+                            if(ui.item){
+                                $('#autocomplete-user').val(ui.item.value);
+                            }
+                            $('#search-user').submit();
+                        }
+                        });
+                });
+        });
+        </script>
         
         <?php if($this->session->userdata('user_name'))
                     {?>
@@ -63,15 +68,23 @@ $(document).ready(function() {
     <body>
         
         <div id="header">
-            <a href="<?php echo base_url(); ?>" class="logo"><span class="icon icon-cloud-upload">Social Cloud</a>
+            <div id="header-logo">
+                <a href="<?php echo base_url(); ?>" class="logo"><span class="icon icon-cloud-upload">Social Cloud</a>
+            </div>
+            <div id="header-login">
             <?php if($this->session->userdata('user_name'))
-                    {
-                        echo $this->session->userdata('user_name');
+                    { 
+                        echo '<ul><li><a href="#">'.$this->session->userdata('user_name').'</a><ul>';
                         
-                        echo '<a href="'.base_url().'user/edit">Edytuj profil</a>';
-                        echo '<a href="'.base_url().'user/logout">Wyloguj</a>';
+                        echo '<li><a href="'.base_url().'user/profile/'.$this->session->userdata('user_name').'">Mój profil</a></li>';
+                        echo '<li><a href="'.base_url().'user/edit">Edytuj profil</a></li>';
+                        echo '<li><a href="'.base_url().'user/edit">Historia wiadomości</a></li>';
+                        echo '<li><a href="'.base_url().'user/logout">Wyloguj</a></li>';
+                        
+                        echo '</ul></li></ul>';
                 
                     }?>
+            </div>
         </div>
                 
         <div id="main">
@@ -81,14 +94,6 @@ $(document).ready(function() {
                         <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-home">Home</span></a></li> 
                         <li><a href="#" id="home" class="skel-panels-ignoreHref active"><span class="icon icon-cloud-download">Aktywne</span></a></li> 
                         <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-retweet">Nieaktywne</span></a></li> 
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-mail-reply">Wiadomości</span></a></li> 
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-user-md">Grupka</span></a></li> 
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-warning-sign">Uwagi i ostrzeżenia</span></a></li> 
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-female">Uwagi i ostrzeżenia</span></a></li>
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-male">Facet</span></a></li>
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-female">Laska</span></a></li>
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-comment">MSG unread</span></a></li>
-                        <li><a href="#" id="home" class="skel-panels-ignoreHref"><span class="icon icon-comment-alt">MSG read</span></a></li>
                     </ul>      
                 </div>
             </div>
